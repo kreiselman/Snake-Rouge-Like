@@ -13,31 +13,71 @@ public class Snake : MonoBehaviour
     private GameObject snakeBodyObj;
     private List<Vector2Int> snakeMovePositionList;
     private GameObject[] snkObj;
+    private MapGenerator map;
+    private GameObject[] floorCheck;
     
-    
-    public void Setup(LevelGrid levelGrid)
+    private enum State
+    {
+        Alive,
+        Dead
+    }
+    private State state;
+
+    public void Setup(LevelGrid levelGrid, MapGenerator mapGen)
     {
         this.levelGrid = levelGrid;
+        this.map = mapGen;
+
+        
+        floorCheck = GameObject.FindGameObjectsWithTag("floor");
+
+        
+        foreach (GameObject floor in floorCheck)
+        {
+           
+            Vector3 floorPos = new Vector3(floor.transform.position.x, floor.transform.position.y);
+            do
+            {
+                gridPosition = new Vector2Int(Random.Range(1, 90), Random.Range(1, 90));
+            } while (GetGridPosition().x != floorPos.x && GetGridPosition().y != floorPos.y);
+            if (GetGridPosition().x == floorPos.x && GetGridPosition().y == floorPos.y)
+            {
+               
+                break;
+            }
+        }
     }
     
 
-   private void Awake()
+    private void Awake()
     {
-        gridPosition = new Vector2Int(10, 10);
+        
+
+        //Debug.Log("Grid pos it " + gridPosition);
+        //gridPosition = new Vector2Int(10, 10);
         gridMoveTimerMax = 1f;
         gridMoveTimer = gridMoveTimerMax;
         gridMoveDirection = new Vector2Int(1, 0);
 
         snakeMovePositionList = new List<Vector2Int>();
         snakeBodySize = 0;
+        state = State.Alive;
     }
 
     private void Update()
     {
 
-
+        if(state == State.Alive)
+        {
         HandleInput();
         HandleGridMovement();
+        }
+
+        else
+        {
+            Debug.Log("GameOver");
+        }
+        
         
 
     }
@@ -103,10 +143,10 @@ public class Snake : MonoBehaviour
         }
 
        bool snakeAteFood = levelGrid.TrySnakeEatFood(gridPosition);
-        Debug.Log("snakeAteFood is " + snakeAteFood);
+       // Debug.Log("snakeAteFood is " + snakeAteFood);
         if (snakeAteFood)
         {
-            Debug.Log("I am growing");
+            //Debug.Log("I am growing");
             snakeBodySize++;
         }
         if (snakeMovePositionList.Count >= snakeBodySize + 1)
@@ -142,6 +182,7 @@ public class Snake : MonoBehaviour
             snakeBodyObj = new GameObject("Snake Body", typeof(SpriteRenderer));
             snakeBodyObj.GetComponent<SpriteRenderer>().sprite = GameAssets.i.SnakeBodySpr;
             snakeBodyObj.gameObject.tag = "body";
+            snakeBodyObj.layer = 0;
             snakeBodyObj.transform.position = new Vector3(snakeMovePosition.x, snakeMovePosition.y);
             snakeBodyObj.transform.localScale = Vector3.one;
             
@@ -150,6 +191,30 @@ public class Snake : MonoBehaviour
 
         }
 
+        GameObject[] bodyCheck = GameObject.FindGameObjectsWithTag("body");
+        GameObject[] wallCheck = GameObject.FindGameObjectsWithTag("wall");
+
+        foreach(GameObject bdy in bodyCheck)
+        {
+            Vector3 bodyPos = new Vector3(bdy.transform.position.x, bdy.transform.position.y);
+
+            if(GetGridPosition().x == bodyPos.x && GetGridPosition().y == bodyPos.y)
+            {
+                state = State.Dead;
+                Debug.Log("Game Over");
+               // GameObject.Destroy(this.gameObject);
+            }
+        }
+
+        foreach(GameObject wall in wallCheck)
+        {
+            Vector3 wallPos = new Vector3(wall.transform.position.x, wall.transform.position.y);
+
+            if(GetGridPosition().x == wallPos.x && GetGridPosition().y == wallPos.y)
+            {
+                state = State.Dead;
+            }
+        }
 
 
 

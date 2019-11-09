@@ -59,7 +59,7 @@ public class MapGenerator : MonoBehaviour
             {
                 if (map[i, j] == 1)
                 {
-                    Instantiate(floor, new Vector3(i + .5f, j + .5f, 0), Quaternion.identity);
+                    Instantiate(floor, new Vector3(i + 1.0f, j + 1.0f, 0), Quaternion.identity);
                     int[] cords = new int[2];
                     cords[0] = i;
                     cords[1] = j;
@@ -67,7 +67,7 @@ public class MapGenerator : MonoBehaviour
                 }
                 else if (map[i, j] == 0)
                 {
-                    Instantiate(wall, new Vector3(i + .5f, j + .5f, 0), Quaternion.identity);
+                    Instantiate(wall, new Vector3(i + 1.0f, j + 1.0f, 0), Quaternion.identity);
                 }
                 line += string.Format("{0}", map[i, j]);
             }
@@ -81,7 +81,7 @@ public class MapGenerator : MonoBehaviour
     {
         for(int i = 0; i < num_food; i++){
             int[] spot = (int[]) (valid_spots[Random.Range(0, valid_spots.Count)]);
-            Instantiate(food, new Vector3(spot[0], spot[1], 0), Quaternion.identity);
+            Instantiate(food, new Vector3(spot[0] + 1, spot[1] + 1, 0), Quaternion.identity);
         }
     }
 

@@ -17,7 +17,7 @@ public class LevelGrid
 
         for (int j = 0; j < 20; j++)
         {
-            SpawnFood();
+            //SpawnFood();
 
         }
     }
@@ -59,13 +59,13 @@ public class LevelGrid
              if (snakeGridPosition.x == piece.transform.position.x && snakeGridPosition.y == piece.transform.position.y)
              {
                 Object.Destroy(piece);
-                Debug.Log("Ate Food");
+                //Debug.Log("Ate Food");
                 return true;
              }
             
          }
 
-        Debug.Log("defaulted");
+        //Debug.Log("defaulted");
         return false;
          
         /*
