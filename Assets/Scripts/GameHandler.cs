@@ -9,6 +9,7 @@ public class GameHandler : MonoBehaviour
     private LevelGrid levelGrid;
        [SerializeField] private Snake snake;
     [SerializeField] private MapGenerator map;
+    [SerializeField] private Canvas can;
     
 
     // Start is called before the first frame update
@@ -16,7 +17,7 @@ public class GameHandler : MonoBehaviour
     {
         Debug.Log("Game Start");
         levelGrid = new LevelGrid(20, 20);
-        snake.Setup(levelGrid, map);
+        snake.Setup(levelGrid, map, can);
         levelGrid.Setup(snake);
     }
 
