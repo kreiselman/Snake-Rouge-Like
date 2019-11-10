@@ -14,6 +14,7 @@ public class Snake : MonoBehaviour
     private List<Vector2Int> snakeMovePositionList;
     private GameObject[] snkObj;
     private MapGenerator map;
+    private Canvas can;
     private GameObject[] floorCheck;
     
     private enum State
@@ -23,15 +24,21 @@ public class Snake : MonoBehaviour
     }
     private State state;
 
-    public void Setup(LevelGrid levelGrid, MapGenerator mapGen)
+    public void Setup(LevelGrid levelGrid, MapGenerator mapGen, Canvas can)
     {
+
         this.levelGrid = levelGrid;
         this.map = mapGen;
+        this.can = can;
 
         
         floorCheck = GameObject.FindGameObjectsWithTag("floor");
 
         int[] start_pos = map.getValid();
+        while(!map.checkValid(start_pos[0], start_pos[1]))
+        {
+            start_pos = map.getValid();
+        }
         gridPosition = new Vector2Int(start_pos[0], start_pos[1]);
     }
     
@@ -64,10 +71,16 @@ public class Snake : MonoBehaviour
         else
         {
             Debug.Log("GameOver");
-            SceneSwitcher.Load(SceneSwitcher.Scene.GameScene);
+            can.gameObject.SetActive(true);
         }
         
         
+
+    }
+
+    public void reload()
+    {
+        SceneSwitcher.Load(SceneSwitcher.Scene.GameScene);
 
     }
 

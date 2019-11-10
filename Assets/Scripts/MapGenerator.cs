@@ -15,6 +15,7 @@ public class MapGenerator : MonoBehaviour
     Random random = new Random();
     private Color[] colors = { new Color(146, 255, 138), new Color(138, 202, 255), new Color(255, 168, 138), new Color(172, 138, 255), new Color(237, 255, 138), new Color(255, 149, 138), new Color(255, 138, 187), new Color(236, 138, 255) };
     private int current_color = 0;
+    private bool isDone = false;
 
     private void Start()
     {
@@ -55,15 +56,13 @@ public class MapGenerator : MonoBehaviour
                 }
             }
         }
-        GameObject border = Instantiate(wall, new Vector3(((18*width)/2)-.5f, -1, 0), Quaternion.identity);
-        border.transform.localScale = new Vector3((18 * width)+2, 1);
-        border = Instantiate(wall, new Vector3(((18 * width) / 2) - .5f, (18 * width), 0), Quaternion.identity);
-        border.transform.localScale = new Vector3((18 * width) + 2, 1);
-        border = Instantiate(wall, new Vector3(-1, ((18 * width) / 2) - .5f, 0), Quaternion.identity);
-        border.transform.localScale = new Vector3(1, 18 * width);  
-        border = Instantiate(wall, new Vector3((18 * width), ((18 * width) / 2) - .5f, 0), Quaternion.identity);
-        border.transform.localScale = new Vector3(1, 18 * width);  
-
+        for(int i = 0; i <= (18*width)+1; i++)
+        {
+            Instantiate(wall, new Vector3(i, -1, 0), Quaternion.identity);
+            Instantiate(wall, new Vector3(i, 18 * width, 0), Quaternion.identity);
+            Instantiate(wall, new Vector3(-1,i, 0), Quaternion.identity);
+            Instantiate(wall, new Vector3(18 * width,i, 0), Quaternion.identity);
+        }
         MakeHallways(rooms);
 
         string line = "";
@@ -94,6 +93,12 @@ public class MapGenerator : MonoBehaviour
         Debug.Log(line);
         for (int i = 0; i < num_food; i++)
             AddFood();
+        isDone = true;
+    }
+
+    public bool genDone()
+    {
+        return isDone;
     }
 
     public void AddFood()
@@ -105,6 +110,11 @@ public class MapGenerator : MonoBehaviour
     public int[] getValid()
     {
         return (int[])(valid_spots[Random.Range(0, valid_spots.Count)]);
+    }
+
+    public bool checkValid(int x, int y)
+    {
+        return map[x,y] == 1;
     }
 
     private void MakeRoom(int x, int y)
