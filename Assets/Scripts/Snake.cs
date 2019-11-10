@@ -64,7 +64,7 @@ public class Snake : MonoBehaviour
         else
         {
             Debug.Log("GameOver");
-            SceneSwitcher.Load(SceneSwitcher.Scene.GameScene);
+            SceneSwitcher.Load(SceneSwitcher.Scene.MainMenu);
         }
         
         

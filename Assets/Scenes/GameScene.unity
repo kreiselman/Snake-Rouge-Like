@@ -502,9 +502,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92e1ab503827076438b2aae40b599bc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 5
-  num_rooms: 4
-  num_food: 10
   wall: {fileID: 45595654857771360, guid: c5577765610e4ae428ee44ed8f25f64a, type: 3}
   floor: {fileID: 7440673143134896309, guid: c6efeeaf430b0a940903c9c670a1b333, type: 3}
   food: {fileID: 2718049992806363232, guid: d80344d478666a643a69a79fbd09af03, type: 3}

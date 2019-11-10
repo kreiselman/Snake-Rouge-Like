@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
 {
-    public int width = 5;
+    private int width = SceneSwitcher.MapWidth;
     private int[,] map;
     ArrayList valid_spots = new ArrayList();
-    public int num_rooms = 3;
-    public int num_food = 10;
+    private int num_rooms = SceneSwitcher.MapRooms;
+    private int num_food = SceneSwitcher.MapFood;
     public GameObject wall;
     public GameObject floor;
     public GameObject food;
