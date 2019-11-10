@@ -148,6 +148,7 @@ public class Snake : MonoBehaviour
         {
             //Debug.Log("I am growing");
             snakeBodySize++;
+            map.AddFood();
         }
         if (snakeMovePositionList.Count >= snakeBodySize + 1)
         {

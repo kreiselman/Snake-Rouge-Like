@@ -8,7 +8,7 @@ public class GameHandler : MonoBehaviour
 
     private LevelGrid levelGrid;
        [SerializeField] private Snake snake;
-    private MapGenerator map;
+    [SerializeField] private MapGenerator map;
     
 
     // Start is called before the first frame update

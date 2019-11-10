@@ -208,7 +208,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
@@ -380,6 +380,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   snake: {fileID: 1050723796}
+  map: {fileID: 1352890842}
 --- !u!1 &1050723795
 GameObject:
   m_ObjectHideFlags: 0
@@ -501,8 +502,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92e1ab503827076438b2aae40b599bc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 15
-  num_rooms: 20
+  width: 5
+  num_rooms: 4
   num_food: 10
   wall: {fileID: 45595654857771360, guid: c5577765610e4ae428ee44ed8f25f64a, type: 3}
   floor: {fileID: 7440673143134896309, guid: c6efeeaf430b0a940903c9c670a1b333, type: 3}
