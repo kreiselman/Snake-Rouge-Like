@@ -13,13 +13,16 @@ public class MapGenerator : MonoBehaviour
     public GameObject floor;
     public GameObject food;
     Random random = new Random();
+    private Color[] colors = { new Color(146, 255, 138), new Color(138, 202, 255), new Color(255, 168, 138), new Color(172, 138, 255), new Color(237, 255, 138), new Color(255, 149, 138), new Color(255, 138, 187), new Color(236, 138, 255) };
+    private int current_color = 0;
 
-    private void Start(){
+    private void Start()
+    {
         map = new int[18 * width, 18 * width];
         int[] rooms = new int[num_rooms];
 
         for (int i = 0; i < num_rooms; i++)
-        {
+        { 
             int num = Random.Range(0, map.Length / (18 * 18));
             while (true)
             {
@@ -42,13 +45,20 @@ public class MapGenerator : MonoBehaviour
             {
                 foreach (int element in rooms)
                 {
-                    if ((i / 18) == (element % width)
-                        && (j / 18) == (element / width))
+                    if ((i / 18) == (element % width) && (j / 18) == (element / width))
                         MakeRoom(i / 18, j / 18);
                     //Debug.Log("Element found at:" + element);
                 }
             }
         }
+        for (int i = 0; i < (18 * width); i++)
+        {
+            Instantiate(wall, new Vector3(i, -1, 0), Quaternion.identity);
+            Instantiate(wall, new Vector3(i, (18 * width), 0), Quaternion.identity);
+            Instantiate(wall, new Vector3(-1,i, 0), Quaternion.identity);
+            Instantiate(wall, new Vector3((18 * width),i, 0), Quaternion.identity);
+        }
+
 
         MakeHallways(rooms);
 
@@ -57,17 +67,16 @@ public class MapGenerator : MonoBehaviour
         {
             for (int j = 0; j < (18 * width); j++)
             {
-                if (map[i, j] == 1)
+                if (map[i, j] == 0)
                 {
-                    Instantiate(floor, new Vector3(i + 1.0f, j + 1.0f, 0), Quaternion.identity);
+                    Instantiate(wall, new Vector3(i, j, 0), Quaternion.identity);
+                }
+                else
+                {
                     int[] cords = new int[2];
                     cords[0] = i;
                     cords[1] = j;
                     valid_spots.Add(cords);
-                }
-                else if (map[i, j] == 0)
-                {
-                    Instantiate(wall, new Vector3(i + 1.0f, j + 1.0f, 0), Quaternion.identity);
                 }
                 line += string.Format("{0}", map[i, j]);
             }
@@ -79,9 +88,10 @@ public class MapGenerator : MonoBehaviour
 
     public void AddFood()
     {
-        for(int i = 0; i < num_food; i++){
-            int[] spot = (int[]) (valid_spots[Random.Range(0, valid_spots.Count)]);
-            Instantiate(food, new Vector3(spot[0] + 1, spot[1] + 1, 0), Quaternion.identity);
+        for (int i = 0; i < num_food; i++)
+        {
+            int[] spot = (int[])(valid_spots[Random.Range(0, valid_spots.Count)]);
+            Instantiate(food, new Vector3(spot[0], spot[1], 0), Quaternion.identity);
         }
     }
 
@@ -95,8 +105,14 @@ public class MapGenerator : MonoBehaviour
         for (int i = 0; i < roomHeight - 0; i++)
         {
             for (int j = 0; j < roomWidth - 0; j++)
+            {
                 map[j + mapX, i + mapY] = 1;
+                GameObject floor_inst = Instantiate(floor, new Vector3(j + mapX, i + mapY, 0), Quaternion.identity);
+                floor_inst.GetComponent<SpriteRenderer>().color = new Color(colors[current_color].g / 255, colors[current_color].r / 255, colors[current_color].b / 255);
+            }
         }
+        current_color++;
+        if (current_color >= colors.Length) current_color = 0;
     }
 
 
@@ -123,18 +139,27 @@ public class MapGenerator : MonoBehaviour
     {
         int end = 0;
         int index = before;
-        for(int p = 0; p < 2; p++){
-            if ((index / width) * 18 < (current / width) * 18){
-                for (int k = (index / width) * 18; k < 1 + (current / width) * 18; k++){
-                    for (int j = 0; j < 2; j++){
+        for (int p = 0; p < 2; p++)
+        {
+            if ((index / width) * 18 < (current / width) * 18)
+            {
+                for (int k = (index / width) * 18; k < 1 + (current / width) * 18; k++)
+                {
+                    for (int j = 0; j < 2; j++)
+                    {
                         map[j + ((current % width) * 18), k] = 1;
+                        Instantiate(floor, new Vector3(j + ((current % width) * 18), k, 0), Quaternion.identity);
                     }
                 }
             }
-            else{
-                for (int k = (current / width) * 18; k < 1 + (index / width) * 18; k++){
-                    for (int j = 0; j < 2; j++){
+            else
+            {
+                for (int k = (current / width) * 18; k < 2 + (index / width) * 18; k++)
+                {
+                    for (int j = 0; j < 2; j++)
+                    {
                         map[j + ((current % width) * 18), k] = 1;
+                        Instantiate(floor, new Vector3(j + ((current % width) * 18), k, 0), Quaternion.identity);
                     }
                 }
             }
@@ -146,6 +171,7 @@ public class MapGenerator : MonoBehaviour
                     for (int j = 0; j < 2; j++)
                     {
                         map[k, j + end] = 1;
+                        Instantiate(floor, new Vector3(k, j + end, 0), Quaternion.identity);
                     }
                 }
             }
@@ -156,6 +182,7 @@ public class MapGenerator : MonoBehaviour
                     for (int j = 0; j < 2; j++)
                     {
                         map[k, j + end] = 1;
+                        Instantiate(floor, new Vector3(k, j + end, 0), Quaternion.identity);
                     }
                 }
             }
