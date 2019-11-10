@@ -102,6 +102,11 @@ public class MapGenerator : MonoBehaviour
             Instantiate(food, new Vector3(spot[0], spot[1], 0), Quaternion.identity);
     }
 
+    public int[] getValid()
+    {
+        return (int[])(valid_spots[Random.Range(0, valid_spots.Count)]);
+    }
+
     private void MakeRoom(int x, int y)
     {
         int roomWidth = Random.Range(13, 17);

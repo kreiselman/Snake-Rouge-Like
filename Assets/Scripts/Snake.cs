@@ -31,21 +31,8 @@ public class Snake : MonoBehaviour
         
         floorCheck = GameObject.FindGameObjectsWithTag("floor");
 
-        
-        foreach (GameObject floor in floorCheck)
-        {
-           
-            Vector3 floorPos = new Vector3(floor.transform.position.x, floor.transform.position.y);
-            do
-            {
-                gridPosition = new Vector2Int(Random.Range(1, 90), Random.Range(1, 90));
-            } while (GetGridPosition().x != floorPos.x && GetGridPosition().y != floorPos.y);
-            if (GetGridPosition().x == floorPos.x && GetGridPosition().y == floorPos.y)
-            {
-               
-                break;
-            }
-        }
+        int[] start_pos = map.getValid();
+        gridPosition = new Vector2Int(start_pos[0], start_pos[1]);
     }
     
 
@@ -62,6 +49,7 @@ public class Snake : MonoBehaviour
         snakeMovePositionList = new List<Vector2Int>();
         snakeBodySize = 0;
         state = State.Alive;
+
     }
 
     private void Update()
