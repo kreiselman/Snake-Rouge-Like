@@ -71,7 +71,6 @@ public class Snake : MonoBehaviour
         else
         {
             Debug.Log("GameOver");
-            SceneSwitcher.Load(SceneSwitcher.Scene.MainMenu);
             can.gameObject.SetActive(true);
         }
         
@@ -81,7 +80,7 @@ public class Snake : MonoBehaviour
 
     public void reload()
     {
-        SceneSwitcher.Load(SceneSwitcher.Scene.GameScene);
+        SceneSwitcher.Load(SceneSwitcher.Scene.MainMenu);
 
     }
 

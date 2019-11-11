@@ -20,10 +20,15 @@ public class MainMenuWindow : MonoBehaviour
 
     public Text FoodText;
 
+    public Button QuitButton;
+
     private void Awake()
     {
         Button btn = StartButton.GetComponent<Button>();
         btn.onClick.AddListener(TaskOnClick);
+
+        Button quit = QuitButton.GetComponent<Button>();
+        quit.onClick.AddListener(ClickTask);
 
         RoomSlider.value = SceneSwitcher.MapRooms;
 
@@ -53,5 +58,10 @@ public class MainMenuWindow : MonoBehaviour
         SceneSwitcher.MapRooms = (int)RoomSlider.value;
         SceneSwitcher.MapWidth = (int)WidthSlider.value;
         SceneSwitcher.Load(SceneSwitcher.Scene.GameScene);
+    }
+
+    void ClickTask()
+    {
+        Application.Quit();
     }
 }
