@@ -1,5 +1,6 @@
 # Rogue-Snake
 Rogue Snake was created by Brian Earl and Justin Kreiselman. 
+
 The external resource used is the Code Monkey’s Snake Tutorial (https://www.youtube.com/playlist?list=PLzDRvYVwl53ucaUs0YGfyyKXdgqh5OtiK) 
 
 The link to the itch.io page is https://kreiselman.itch.io/rogue-snake
